@@ -35,7 +35,7 @@ def game_over(screen: pg.Surface) -> None:
     戻り値：なし
     ゲームオーバー後の処理
     """
-
+    # 背景の表示
     sikaku = pg.Surface((WIDTH, HEIGHT))
     pg.draw.rect(sikaku, (0, 0, 0), (0, 0, WIDTH, HEIGHT))
     sikaku.set_alpha(200)
@@ -57,6 +57,17 @@ def game_over(screen: pg.Surface) -> None:
     time.sleep(5)
 
 
+def init_bb_imgs() -> tuple[list[pg.Surface], list[int]]:
+    accs = [i for i in range(1, 11)]
+    imgs = []
+    for r in range(1, 11):
+        bb_img = pg.Surface((20 * r, 20 * r))
+        pg.draw.circle(bb_img, (255, 0, 0), (10 * r, 10 * r), 10 * r)
+        bb_img.set_colorkey((0, 0, 0))
+        imgs.append(bb_img)
+    return imgs, accs
+
+
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -70,6 +81,7 @@ def main():
     bb_rct = bb_img.get_rect()
     bb_rct.center = random.randint(0, WIDTH), random.randint(0, HEIGHT)
     vx, vy = +5, +5  # 爆弾速度ベクトル
+    bb_imgs, bb_accs = init_bb_imgs()
     clock = pg.time.Clock()
     tmr = 0
     while True:
@@ -101,7 +113,13 @@ def main():
         if check_bound(kk_rct) != (True, True):
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
         screen.blit(kk_img, kk_rct)
-        bb_rct.move_ip(vx, vy)  # 爆弾動く
+        # 爆弾の加速と大きさの変更
+        avx = vx * bb_accs[min(tmr // 500, 9)]
+        avy = vy * bb_accs[min(tmr // 500, 9)]
+        bb_img = bb_imgs[min(tmr // 500, 9)]
+        bb_rct.width = bb_img.get_rect().width
+        bb_rct.height = bb_img.get_rect().height
+        bb_rct.move_ip(avx, avy)  # 爆弾動く
         yoko, tate = check_bound(bb_rct)
         if not yoko:
             vx *= -1
