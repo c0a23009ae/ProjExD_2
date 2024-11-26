@@ -58,6 +58,11 @@ def game_over(screen: pg.Surface) -> None:
 
 
 def init_bb_imgs() -> tuple[list[pg.Surface], list[int]]:
+    """
+    爆弾の大きさ、速度を変更する関数
+    引数：なし
+    戻り値：大きさのimgsと速度のaccs
+    """
     accs = [i for i in range(1, 11)]
     imgs = []
     for r in range(1, 11):
@@ -82,6 +87,7 @@ def main():
     bb_rct.center = random.randint(0, WIDTH), random.randint(0, HEIGHT)
     vx, vy = +5, +5  # 爆弾速度ベクトル
     bb_imgs, bb_accs = init_bb_imgs()
+
     clock = pg.time.Clock()
     tmr = 0
     while True:
