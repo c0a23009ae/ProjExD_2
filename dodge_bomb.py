@@ -97,7 +97,7 @@ def main():
     kk_rct.center = 300, 200
     bb_img = pg.Surface((20, 20))  # 爆弾用の空のSurface
     pg.draw.circle(bb_img, (255, 0, 0), (10, 10), 10)  # 爆弾の円を描く
-    bb_img.set_colorkey((0, 0, 0))
+    bb_img.set_colorkey((0, 0, 0))  # 黒い四角を透過
     bb_rct = bb_img.get_rect()
     bb_rct.center = random.randint(0, WIDTH), random.randint(0, HEIGHT)
     vx, vy = +5, +5  # 爆弾速度ベクトル
