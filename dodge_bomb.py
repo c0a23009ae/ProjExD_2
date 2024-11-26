@@ -44,7 +44,7 @@ def game_over(screen: pg.Surface) -> None:
     fonto = pg.font.Font(None, 60)
     txt = fonto.render("Game Over", True, (255, 255, 255))
     txt_rct = txt.get_rect()
-    txt_rct.center = WIDTH / 2, HEIGHT / 2
+    txt_rct.center = WIDTH // 2, HEIGHT // 2
     screen.blit(txt, txt_rct)
     # こうかとん
     kk_img2 = pg.image.load("fig/8.png")
