@@ -72,12 +72,27 @@ def init_bb_imgs() -> tuple[list[pg.Surface], list[int]]:
         imgs.append(bb_img)
     return imgs, accs
 
+# def get_kk_img(sum_mv: tuple[int, int]) -> pg.Surface:
+#     img = pg.image.load("fig/3.png")
+#     img2 = pg.transform.flip(img, True, False)
+#     dct = {
+#         (-5, 0): img,
+#         (-5, -5): pg.transform.rotozoom(img, 45, 1.0),
+#         (0, -5): pg.transform.rotozoom(img2, 90, 1.0),
+#         (+5, -5): pg.transform.rotozoom(img2, 45, 1.0),
+#         (+5, 0): img2
+#         (+5, +5):
+#         (0, +5):
+#         (-5, +5):
+    # }
+
 
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
     bg_img = pg.image.load("fig/pg_bg.jpg")    
     kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9)
+    #kk_img = get_kk_img((0, 0))
     kk_rct = kk_img.get_rect()
     kk_rct.center = 300, 200
     bb_img = pg.Surface((20, 20))  # 爆弾用の空のSurface
@@ -115,6 +130,7 @@ def main():
         # if key_lst[pg.K_RIGHT]:
         #     sum_mv[0] += 5
         kk_rct.move_ip(sum_mv)
+        #kk_img = get_kk_img(tuple(sum_mv))
         # こうかとんが画面外なら、元の場所に戻す
         if check_bound(kk_rct) != (True, True):
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
